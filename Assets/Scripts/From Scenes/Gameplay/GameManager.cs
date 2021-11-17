@@ -51,10 +51,18 @@ public class GameManager : MonoBehaviour
     private Currency higher;
 
     [SerializeField] private float tubeSpeed = 1;
-    [SerializeField] private float tubeAugmentCoef = 1.0000001f;
+    [SerializeField] private float tubeAugmentCoef = 1.000001f;
 
     private float speedMultiplier = 1;
     private float timer = 0;
+
+    [SerializeField] private GameObject hat;
+    [SerializeField] private GameObject beak;
+    [SerializeField] private GameObject eyes;
+
+    private SpriteRenderer hatSkin;
+    private SpriteRenderer beakSkin;
+    private SpriteRenderer eyesSkin;
 
     private void Awake()
     {
@@ -69,6 +77,13 @@ public class GameManager : MonoBehaviour
 
         txtHighPoints.text = higher.points.ToString();
         txtHighCoins.text = higher.coins.ToString();
+
+        hatSkin = hat.GetComponent<SpriteRenderer>();
+        beakSkin = beak.GetComponent<SpriteRenderer>();
+        eyesSkin = eyes.GetComponent<SpriteRenderer>();
+        Debug.Log(hatSkin);
+
+        GetBirdSkins();
     }
 
     // Start is called before the first frame update
@@ -255,5 +270,31 @@ public class GameManager : MonoBehaviour
     {
         manager.SetCoins(coinsTotal);
         manager.SetPoints(pointsTotal);
+    }
+    void GetBirdSkins()
+    {
+        for (int i = 0; i < manager.GetCosmeticList().Count; i++)
+        {
+            if (manager.GetCosmeticList()[i].IsEquipped())
+            {
+                switch (manager.GetCosmeticList()[i].cosmetic)
+                {
+                    case CosmeticType.Hat:
+                        hatSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
+                        Debug.Log(hatSkin);
+                        break;
+                    case CosmeticType.Beak:
+                        beakSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
+                        Debug.Log(beakSkin);
+                        break;
+                    case CosmeticType.Eyes:
+                        eyesSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
+                        Debug.Log(eyesSkin);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }

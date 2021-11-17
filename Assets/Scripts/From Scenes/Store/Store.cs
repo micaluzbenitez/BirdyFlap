@@ -159,6 +159,7 @@ public class Store : MonoBehaviour
                 {
                     totalPoints -= cosmetics[actualIndex].GetPrice().quantity;
                     cosmetics[actualIndex].Buy();
+                    manager.SetPoints(totalPoints);
                     pointCurr.text = totalPoints.ToString();
                 }
             }
@@ -168,6 +169,7 @@ public class Store : MonoBehaviour
                 {
                     totalCoins -= cosmetics[actualIndex].GetPrice().quantity;
                     cosmetics[actualIndex].Buy();
+                    manager.SetCoins(totalCoins);
                     coinCurr.text = totalCoins.ToString();
                 }
             }

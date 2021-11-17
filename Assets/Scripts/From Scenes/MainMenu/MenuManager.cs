@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
@@ -8,6 +9,18 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private CanvasGroup mainMenuPanel;
     [SerializeField] private CanvasGroup creditPanel;
+
+    [SerializeField] private Image hatSkin;
+    [SerializeField] private Image beakSkin;
+    [SerializeField] private Image eyesSkin;
+
+    Manager manager;
+
+    void Awake()
+    {
+        manager = Manager.GetInstance();
+        GetBirdSkins();
+    }
 
     public float showSpeed = 1;
     public void Start()
@@ -20,7 +33,6 @@ public class MenuManager : MonoBehaviour
         UnloadPanel(creditPanel);
         LoadPanel(mainMenuPanel);
     }
-
     public void LoadCreditsPanel()
     {
         StopAllCoroutines();
@@ -31,7 +43,6 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Store");
     }
-
     private void UnloadPanel(CanvasGroup panel)
     {
         StartCoroutine(UnloadPanelCoroutine(panel));
@@ -40,7 +51,6 @@ public class MenuManager : MonoBehaviour
     {
         StartCoroutine(LoadPanelCoroutine(panel));
     }
-
     IEnumerator UnloadPanelCoroutine(CanvasGroup panel)
     {
         if (panel.alpha > 0)
@@ -57,7 +67,6 @@ public class MenuManager : MonoBehaviour
             panel.blocksRaycasts = false;
         }
     }
-
     IEnumerator LoadPanelCoroutine(CanvasGroup panel)
     {
         float t = 0;
@@ -71,15 +80,36 @@ public class MenuManager : MonoBehaviour
         panel.interactable = true;
         panel.blocksRaycasts = true;
     }
-
     public void LoadGame(string scene)
     {
         SceneManager.LoadScene(scene);
     }
-
     public void ExitGame()
     {
         Application.Quit();
+    }
+    void GetBirdSkins()
+    {
+        for (int i = 0; i < manager.GetCosmeticList().Count; i++)
+        {
+            if(manager.GetCosmeticList()[i].IsEquipped())
+            {
+                switch (manager.GetCosmeticList()[i].cosmetic)
+                {
+                    case CosmeticType.Hat:
+                        hatSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
+                        break;
+                    case CosmeticType.Beak:
+                        beakSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
+                        break;
+                    case CosmeticType.Eyes:
+                        eyesSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
 }
