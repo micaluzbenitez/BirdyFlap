@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text txtCoinsTotal;
     [SerializeField] private TMP_Text txtPointsTotal;
 
+    [SerializeField] private TMP_Text txtHighPoints;
+    [SerializeField] private TMP_Text txtHighCoins;
+
     [SerializeField] private CanvasGroup endScreen;
     public float UIshowSpeed = 1;
     private bool shownEndScreen = false;
@@ -45,6 +48,8 @@ public class GameManager : MonoBehaviour
 
     private bool playerAlive = false;
 
+    private Currency higher;
+
     [SerializeField] private float tubeSpeed = 1;
     [SerializeField] private float tubeAugmentCoef = 1.0000001f;
 
@@ -59,6 +64,11 @@ public class GameManager : MonoBehaviour
 
         pointsTotal = manager.GetCurrency().points;
         coinsTotal = manager.GetCurrency().coins;
+
+        higher = manager.GetMaxPoints();
+
+        txtHighPoints.text = higher.points.ToString();
+        txtHighCoins.text = higher.coins.ToString();
     }
 
     // Start is called before the first frame update
@@ -74,6 +84,8 @@ public class GameManager : MonoBehaviour
         paused = false;
         playerAlive = true;
         shownEndScreen = false;
+
+        higher = manager.GetMaxPoints();
 
         pointsInGame = 0;
         coinsInGame = 0;
@@ -101,6 +113,19 @@ public class GameManager : MonoBehaviour
 
                 txtPointsTotal.text = GetTotalCurrency(pointsTotal);
                 txtCoinsTotal.text = GetTotalCurrency(coinsTotal);
+
+                if(HigherThanPrev(pointsInGame,higher.points))
+                {
+                    txtHighPoints.text = pointsInGame.ToString();
+                    manager.SetMaxPoints(pointsInGame);
+                }
+
+                if (HigherThanPrev(coinsInGame, higher.coins))
+                {
+                    txtHighCoins.text = coinsInGame.ToString();
+                    manager.SetMaxCoins(coinsInGame);
+                }
+
                 LoadEndScreen(endScreen);
                 shownEndScreen = true;
             }
@@ -182,7 +207,10 @@ public class GameManager : MonoBehaviour
         }
         timer += Time.deltaTime;
     }
-
+    bool HigherThanPrev(int actual, int prev)
+    {
+        return actual > prev;
+    }
     void LoadEndScreen(CanvasGroup panel)
     {
         StartCoroutine(LoadPanelCoroutine(panel));
