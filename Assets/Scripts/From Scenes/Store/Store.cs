@@ -155,7 +155,7 @@ public class Store : MonoBehaviour
         {
             if(cosmetics[actualIndex].GetPrice().currencyType.Equals(CurrencyType.Points))
             {
-                if(totalPoints>cosmetics[actualIndex].GetPrice().quantity)
+                if (totalPoints >= cosmetics[actualIndex].GetPrice().quantity)
                 {
                     totalPoints -= cosmetics[actualIndex].GetPrice().quantity;
                     cosmetics[actualIndex].Buy();
@@ -165,7 +165,7 @@ public class Store : MonoBehaviour
             }
             else
             {
-                if (totalCoins > cosmetics[actualIndex].GetPrice().quantity)
+                if (totalCoins >= cosmetics[actualIndex].GetPrice().quantity)
                 {
                     totalCoins -= cosmetics[actualIndex].GetPrice().quantity;
                     cosmetics[actualIndex].Buy();
