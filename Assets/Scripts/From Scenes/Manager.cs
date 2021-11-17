@@ -33,10 +33,8 @@ public struct Currency
 }
 public struct Bird
 {
-    public int hat_lineart;
     public int hat_color;
-    public int body;
-    public int wing;
+    public int eyes;
     public int beak;
 }
 public struct Skin
@@ -55,7 +53,20 @@ public class Manager : MonoBehaviour
     public List<Cosmetic> cosmetics = new List<Cosmetic>(SkinBeakColorCount + SkinEyeColorCount + SkinHatColorCount);
 
     private Currency currency;
-    private Skin skin;
+    public Skin skin;
+
+    private Currency maxCurrencyEarned;
+
+    public static Skin GetDefaultSkin()
+    { 
+        Skin def = new Skin();
+
+        def.bird.beak = 5;
+        def.bird.hat_color = 0;
+        def.bird.eyes = 7;
+
+        return def;
+    }
 
     void Awake()
     {
@@ -70,13 +81,15 @@ public class Manager : MonoBehaviour
             currency.coins = 0;
             currency.points = 0;
 
-            skin.bird.beak = 0;
-            skin.bird.body = 0;
+            maxCurrencyEarned.coins = 0;
+            maxCurrencyEarned.points = 0;
+
+            skin.bird.eyes = 7;
             skin.bird.hat_color = 0;
-            skin.bird.hat_lineart = 0;
-            skin.bird.wing = 0;
+            skin.bird.beak = 5;
 
             skin.tube = 0;
+
 
 
             DontDestroyOnLoad(gameObject);
@@ -92,10 +105,23 @@ public class Manager : MonoBehaviour
     {
         return currency;
     }
+    public Currency GetMaxPoints()
+    {
+        return maxCurrencyEarned;
+    }
+    public void SetMaxPoints(int points)
+    {
+        maxCurrencyEarned.points = points;
+    }
+    public void SetMaxCoins(int coins)
+    {
+        maxCurrencyEarned.coins = coins;
+    }
     public void SetPoints(int points)
     {
         currency.points = points;
     }
+    
     public void SetCoins(int coins)
     {
         currency.coins = coins;

@@ -256,22 +256,67 @@ MonoBehaviour:
   cosmetics:
   - cosmetic: 0
     sprite: {fileID: 21300000, guid: 6fe1f01e5433ce44e977e9386e9cf81b, type: 3}
+    price:
+      quantity: 0
+      currencyType: 0
+    bought: 1
+    equipped: 1
   - cosmetic: 0
     sprite: {fileID: 21300000, guid: 0aa263e189e70274888b8783e0001064, type: 3}
+    price:
+      quantity: 10
+      currencyType: 0
+    bought: 0
+    equipped: 0
   - cosmetic: 0
     sprite: {fileID: 21300000, guid: 299faa2358bf5834598adc4ac5aed66f, type: 3}
-  - cosmetic: 0
-    sprite: {fileID: 21300000, guid: f77e835e7f1bc0749a601102a27afc15, type: 3}
+    price:
+      quantity: 25
+      currencyType: 0
+    bought: 0
+    equipped: 0
   - cosmetic: 0
     sprite: {fileID: 21300000, guid: e761141f4ee1cd84696c944b4907b45a, type: 3}
+    price:
+      quantity: 40
+      currencyType: 0
+    bought: 0
+    equipped: 0
+  - cosmetic: 0
+    sprite: {fileID: 21300000, guid: f77e835e7f1bc0749a601102a27afc15, type: 3}
+    price:
+      quantity: 5
+      currencyType: 1
+    bought: 0
+    equipped: 0
   - cosmetic: 1
     sprite: {fileID: 21300000, guid: 110b8500dcf0e294a8ca3c51780ff017, type: 3}
+    price:
+      quantity: 0
+      currencyType: 0
+    bought: 1
+    equipped: 1
   - cosmetic: 1
     sprite: {fileID: 21300000, guid: d536210c73d2c204abee8dba2d0bb65f, type: 3}
+    price:
+      quantity: 50
+      currencyType: 0
+    bought: 0
+    equipped: 0
   - cosmetic: 2
     sprite: {fileID: 21300000, guid: ccdc37303efd79843b668215af6eeb01, type: 3}
+    price:
+      quantity: 0
+      currencyType: 0
+    bought: 1
+    equipped: 1
   - cosmetic: 2
     sprite: {fileID: 21300000, guid: e2db6ddd4d079d747be64eaec1f3edc8, type: 3}
+    price:
+      quantity: 10
+      currencyType: 1
+    bought: 0
+    equipped: 0
 --- !u!1 &788203532
 GameObject:
   m_ObjectHideFlags: 0
