@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject[] obstacles;
+    private GameObject[] coins;
     [SerializeField] private float distanceBetweenObstacles = 1;
     [SerializeField] private float initialPosX = 3.5f;
     
@@ -84,6 +85,12 @@ public class GameManager : MonoBehaviour
         Debug.Log(hatSkin);
 
         GetBirdSkins();
+
+        coins = new GameObject[obstacles.Length];
+        //GetCoinRefs();
+
+        //SetCoinY();
+
     }
 
     // Start is called before the first frame update
@@ -113,6 +120,7 @@ public class GameManager : MonoBehaviour
         {
             MoveTubes();
             CheckTubes();
+            //MoveCoins();
             CheckScore();
         }
         else
@@ -158,7 +166,7 @@ public class GameManager : MonoBehaviour
         }
         distanceToReset = obstacles[obstacles.Length - 1].transform.position.x + distanceBetweenObstacles;
     }
-    void SetNewObstaclePos(ref GameObject o, int actualPos)
+    void SetNewObstaclePos(ref GameObject o, ref GameObject c, int actualPos)
     {
         int lastObstacle = 0;
         switch (actualPos)
@@ -176,6 +184,8 @@ public class GameManager : MonoBehaviour
                 break;
         }
         o.transform.position = new Vector3(obstacles[lastObstacle].transform.position.x + distanceBetweenObstacles, Random.Range(minHeight, maxHeight));
+        //c.transform.position = o.transform.position;
+        //CheckCoinAppearance(ref c);
         justPassed[actualPos] = false;
         justChecked[actualPos] = false;
     }
@@ -189,7 +199,7 @@ public class GameManager : MonoBehaviour
             }
             if (obstacles[i].transform.position.x < LimitLeft)
             {
-                SetNewObstaclePos(ref obstacles[i], i);
+                SetNewObstaclePos(ref obstacles[i], ref coins[i], i);
             }
         }
     }
@@ -264,12 +274,14 @@ public class GameManager : MonoBehaviour
     public void EnterStore()
     {
         SendCurrency();
+        Logger.SendFilePath();
         SceneManager.LoadScene("Store");
     }
     private void SendCurrency()
     {
         manager.SetCoins(coinsTotal);
         manager.SetPoints(pointsTotal);
+        Logger.SendCurrency(pointsTotal, coinsTotal, "GAMEPLAY");
     }
     void GetBirdSkins()
     {
@@ -296,5 +308,53 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+    void GetCoinRefs()
+    {
+        List<Component> c = new List<Component>();
+        GameObject obs;
+        for (int i = 0; i < obstacles.Length; i++)
+        {
+            obs = obstacles[i];
+            obs.GetComponentsInChildren(c);
+            for (int j = 0; j < c.Count; j++)
+            {
+                if(c[j].CompareTag("coin"))
+                {
+                    coins[i] = c[j].gameObject;
+                }
+            }
+            c.Clear();
+        }
+    }
+    void SetCoinY()
+    {
+        for (int i = 0; i < coins.Length; i++)
+        {
+            coins[i].transform.position = obstacles[i].transform.position;
+        }
+    }
+    void MoveCoins()
+    {
+        Vector3 pos;
+        float parentPos;
+        for (int i = 0; i < coins.Length; i++)
+        {
+            pos = coins[i].transform.position;
+            parentPos = obstacles[i].transform.position.y;
+            if (pos.y > CoinVerticalMovement.maxY + parentPos)
+            {
+                pos = new Vector3(pos.x, pos.y - 1.0f * Time.deltaTime * 1.1f, pos.z);
+            }
+            if (pos.y < CoinVerticalMovement.minY + parentPos)
+            {
+                pos = new Vector3(pos.x, pos.y + 1.0f * Time.deltaTime * 1.2f, pos.z);
+            }
+        }
+    }
+
+    void CheckCoinAppearance(ref GameObject c)
+    {
+        c.SetActive(Random.Range(0, 1000) > 950);
     }
 }

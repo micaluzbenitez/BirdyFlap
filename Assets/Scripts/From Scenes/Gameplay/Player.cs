@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private Vector3 pos;
 
     public static Action onPlayerCollision;
+    public static Action onGrabCoin;
 
     void Awake()
     {
@@ -29,10 +30,14 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            Debug.Log("Hizo colision");
+            //Debug.Log("Hizo colision");
             alive = false;
             onPlayerCollision?.Invoke();
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        if(collision.gameObject.layer == 9)
+        {
+            onGrabCoin?.Invoke();
         }
     }
     void Update()
