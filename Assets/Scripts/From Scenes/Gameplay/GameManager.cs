@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
         {
             if(!shownEndScreen)
             {
-                txtPointsOnGame.text = "0";
+                txtPointsOnGame.text = "";
                 txtPointsOnUI.text = pointsInGame.ToString();
                 txtCoinsOnUI.text = coinsInGame.ToString();
 
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 
 //#if UNITY_ANDROID && !UNITY_EDITOR
                 
-                    Logger.SaveCurrencyInFile(pointsTotal, coinsTotal, manager.GetMaxPoints().points, manager.GetMaxPoints().coins, manager.GetCosmeticList());
+                Logger.SaveCurrencyInFile(pointsTotal, coinsTotal, manager.GetMaxPoints().points, manager.GetMaxPoints().coins, manager.GetCosmeticList());
 //#endif
 
                 Manager.CheckPointAchievement(pointsInGame);

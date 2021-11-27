@@ -180,14 +180,13 @@ public class Manager : MonoBehaviour
 
         string[] equipped = types[1].Split('_');
 
-        bool auxEq = false;
-
         for (int i = 0; i < cosmetics.Count; i++)
         {
             cosmetics[i].SetIfEquiped(equipped[i].Equals('t'));
         }
 
         string[] bought = types[2].Split('_');
+
         for (int i = 0; i < cosmetics.Count; i++)
         {
             cosmetics[i].SetIfEquiped(bought[i].Equals('t'));

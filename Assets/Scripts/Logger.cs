@@ -143,6 +143,7 @@ public class Logger
                 data += "_";
             }
         }
+
         Debug.Log(data);
         #if UNITY_ANDROID && !UNITY_EDITOR
         LoggerInstance?.Call("saveCurrency", data, context);

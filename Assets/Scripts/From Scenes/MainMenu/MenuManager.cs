@@ -21,7 +21,7 @@ public class MenuManager : MonoBehaviour
     {
         manager = Manager.GetInstance();
         GetBirdSkins();
-        //Application.logMessageReceived += HandleLog;
+        Application.logMessageReceived += HandleLog;
     }
 
     void HandleLog(string logString, string stackTrace, LogType type)
