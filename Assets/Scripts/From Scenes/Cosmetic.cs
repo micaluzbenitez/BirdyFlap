@@ -28,6 +28,8 @@ public class Cosmetic
     public void Buy() => bought = true;
     public void Equip() => equipped = true;
     public void UnEquip() => equipped = false;
+    public void SetIfEquiped(bool e) => equipped = e;
+    public void SetIfBougth(bool b) => bought = b;
     public bool IsEquipped() { return equipped; }
     public bool IsBought() { return bought; }    
     public Price GetPrice() { return price; }    

@@ -134,6 +134,9 @@ public class GameManager : MonoBehaviour
                 pointsTotal += pointsInGame;
                 coinsTotal += coinsInGame;
 
+                Debug.Log("Se ha terminado la partida con " + pointsInGame + " puntos.");
+                Debug.Log("Se tienen un total de " + pointsTotal + " puntos.");
+                
                 txtPointsTotal.text = GetTotalCurrency(pointsTotal);
                 txtCoinsTotal.text = GetTotalCurrency(coinsTotal);
 
@@ -148,6 +151,14 @@ public class GameManager : MonoBehaviour
                     txtHighCoins.text = coinsInGame.ToString();
                     manager.SetMaxCoins(coinsInGame);
                 }
+
+//#if UNITY_ANDROID && !UNITY_EDITOR
+                
+                    Logger.SaveCurrencyInFile(pointsTotal, coinsTotal, manager.GetMaxPoints().points, manager.GetMaxPoints().coins, manager.GetCosmeticList());
+//#endif
+
+                Manager.CheckPointAchievement(pointsInGame);
+                Manager.CheckAccumultarionAchievement(pointsTotal);
 
                 LoadEndScreen(endScreen);
                 shownEndScreen = true;
@@ -184,8 +195,8 @@ public class GameManager : MonoBehaviour
                 break;
         }
         o.transform.position = new Vector3(obstacles[lastObstacle].transform.position.x + distanceBetweenObstacles, Random.Range(minHeight, maxHeight));
-        //c.transform.position = o.transform.position;
-        //CheckCoinAppearance(ref c);
+
+        Debug.Log("Obstaculo setteado en la altura " + o.transform.position);
         justPassed[actualPos] = false;
         justChecked[actualPos] = false;
     }
@@ -200,6 +211,8 @@ public class GameManager : MonoBehaviour
             if (obstacles[i].transform.position.x < LimitLeft)
             {
                 SetNewObstaclePos(ref obstacles[i], ref coins[i], i);
+
+                Debug.Log("Reseteado el obstaculo " + i );
             }
         }
     }
@@ -213,7 +226,7 @@ public class GameManager : MonoBehaviour
                 {
                     pointsInGame++;
                     txtPointsOnGame.text = pointsInGame.ToString();
-                    Debug.Log(pointsInGame);
+                    Debug.Log("Contador de puntos: " + pointsInGame);
                     justChecked[i] = true;
                 }
             }
@@ -234,6 +247,11 @@ public class GameManager : MonoBehaviour
     }
     bool HigherThanPrev(int actual, int prev)
     {
+        if(actual>prev)
+            Debug.Log("El puntaje alcanzado es mayor que el maximo alcanzado antes.");
+        else
+            Debug.Log("El puntaje anterior es el maximo alcanzado.");
+
         return actual > prev;
     }
     void LoadEndScreen(CanvasGroup panel)
@@ -269,19 +287,27 @@ public class GameManager : MonoBehaviour
     public void BackToMenu()
     {
         SendCurrency();
+        Debug.Log("Volviendo al MENU. Desde el GAMEPLAY.");
         SceneManager.LoadScene("MainMenu");
     }
     public void EnterStore()
     {
         SendCurrency();
-        Logger.SendFilePath();
+#if UNITY_ANDROID && !UNITY_EDITOR
+            //Logger.SendFilePath();
+#endif
+        Debug.Log("Yendo a la STORE, desde el GAMEPLAY");
         SceneManager.LoadScene("Store");
     }
     private void SendCurrency()
     {
         manager.SetCoins(coinsTotal);
         manager.SetPoints(pointsTotal);
-        Logger.SendCurrency(pointsTotal, coinsTotal, "GAMEPLAY");
+#if UNITY_ANDROID && !UNITY_EDITOR
+            Logger.SendCurrency(pointsTotal, coinsTotal, "GAMEPLAY");
+#endif
+
+        Debug.Log("Currency enviada al archivo en el celular.");
     }
     void GetBirdSkins()
     {
@@ -352,9 +378,14 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
     void CheckCoinAppearance(ref GameObject c)
     {
         c.SetActive(Random.Range(0, 1000) > 950);
     }
+
+    public void ShowAchievements()
+    {
+        Auth.ShowAchievements();
+    }
+
 }

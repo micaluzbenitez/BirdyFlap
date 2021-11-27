@@ -108,6 +108,8 @@ public class Store : MonoBehaviour
     {
         actualIndex = index;
 
+        Debug.Log("Mostrando Skin i="+index);
+
         switch (cosmetics[index].cosmetic)
         {
             case CosmeticType.Hat:
@@ -161,6 +163,11 @@ public class Store : MonoBehaviour
                     cosmetics[actualIndex].Buy();
                     manager.SetPoints(totalPoints);
                     pointCurr.text = totalPoints.ToString();
+                    Debug.Log("Comprado item " + actualIndex + " a " + cosmetics[actualIndex].GetPrice().quantity + " puntos.");
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    Logger.SaveCurrencyInFile(totalPoints, totalCoins, manager.GetMaxPoints().points, manager.GetMaxPoints().coins,manager.GetCosmeticList());
+#endif
+
                 }
             }
             else
@@ -171,6 +178,10 @@ public class Store : MonoBehaviour
                     cosmetics[actualIndex].Buy();
                     manager.SetCoins(totalCoins);
                     coinCurr.text = totalCoins.ToString();
+                    Debug.Log("Comprado item " + actualIndex + " a " + cosmetics[actualIndex].GetPrice().quantity + " coins.");
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    Logger.SaveCurrencyInFile(totalPoints, totalCoins, manager.GetMaxPoints().points, manager.GetMaxPoints().coins,manager.GetCosmeticList());
+#endif
                 }
             }
             if (cosmetics[actualIndex].IsBought())
@@ -178,6 +189,7 @@ public class Store : MonoBehaviour
                 pricePointsCurr.SetActive(false);
                 priceCoinCurr.SetActive(false);
                 price.text = "BOUGHT";
+                Debug.Log("Item " + actualIndex + " cambia su estado a 'COMPRADO'");
             }
         } 
     }
@@ -198,6 +210,7 @@ public class Store : MonoBehaviour
                 if(cosmetics[actualIndex].IsEquipped())
                 {
                     price.text = "EQUIPPED";
+                    Debug.Log("Equipado el item " + actualIndex);
                 }
             }
         }

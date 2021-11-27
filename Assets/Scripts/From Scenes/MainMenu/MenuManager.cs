@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
 public class MenuManager : MonoBehaviour
 {
 
@@ -20,6 +21,14 @@ public class MenuManager : MonoBehaviour
     {
         manager = Manager.GetInstance();
         GetBirdSkins();
+        //Application.logMessageReceived += HandleLog;
+    }
+
+    void HandleLog(string logString, string stackTrace, LogType type)
+    {
+        #if UNITY_ANDROID && !UNITY_EDITOR
+        Logger.WriteInContextFile(logString);
+#endif
     }
 
     public float showSpeed = 1;
@@ -32,15 +41,18 @@ public class MenuManager : MonoBehaviour
         StopAllCoroutines();
         UnloadPanel(creditPanel);
         LoadPanel(mainMenuPanel);
+        Debug.Log("Inicia el panel de menu");
     }
     public void LoadCreditsPanel()
     {
         StopAllCoroutines();
         UnloadPanel(mainMenuPanel);
         LoadPanel(creditPanel);
+        Debug.Log("Inicia el panel de creditos");
     }
     public void LoadStoreScene()
     {
+        Debug.Log("Deja el menu, y se va a la tienda");
         SceneManager.LoadScene("Store");
     }
     private void UnloadPanel(CanvasGroup panel)
@@ -82,10 +94,12 @@ public class MenuManager : MonoBehaviour
     }
     public void LoadGame(string scene)
     {
+        Debug.Log("Deja el menu, y se va al juego"); 
         SceneManager.LoadScene(scene);
     }
     public void ExitGame()
     {
+        Debug.Log("Saliendo del juego.");
         Application.Quit();
     }
     void GetBirdSkins()
@@ -97,12 +111,15 @@ public class MenuManager : MonoBehaviour
                 switch (manager.GetCosmeticList()[i].cosmetic)
                 {
                     case CosmeticType.Hat:
+                        //Debug.Log("Skin equipado de sombrero: " + i);
                         hatSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
                         break;
                     case CosmeticType.Beak:
+                        //Debug.Log("Skin equipado de pico: " + i);
                         beakSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
                         break;
                     case CosmeticType.Eyes:
+                        //Debug.Log("Skin equipado de ojos: " + i);
                         eyesSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
                         break;
                     default:
@@ -110,6 +127,10 @@ public class MenuManager : MonoBehaviour
                 }
             }
         }
+    }
+    public void ShowAchievements()
+    {
+        Auth.ShowAchievements();
     }
 
 }

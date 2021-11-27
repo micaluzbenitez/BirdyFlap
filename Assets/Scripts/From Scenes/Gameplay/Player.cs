@@ -30,14 +30,16 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            //Debug.Log("Hizo colision");
             alive = false;
             onPlayerCollision?.Invoke();
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+            Debug.Log("Colision con un obstaculo.");
         }
         if(collision.gameObject.layer == 9)
         {
             onGrabCoin?.Invoke();
+            Debug.Log("Colision con una moneda");
         }
     }
     void Update()
@@ -53,15 +55,18 @@ public class Player : MonoBehaviour
         Vector2 force = new Vector2(0, jumpForce);
         rb.velocity = Vector2.zero;
         rb.AddForce(force, ForceMode2D.Impulse);
+        //Debug.Log("El personaje salta");
     }
     void CheckInputs()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //Debug.Log("Salto con espacio");
             Jump();
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            //Debug.Log("Salto con clic izquierdo");
             Jump();
         }
     }
@@ -94,5 +99,7 @@ public class Player : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         alive = true;
         transform.position = pos;
+
+        Debug.Log("Reseteo de personaje.");
     }
 }
