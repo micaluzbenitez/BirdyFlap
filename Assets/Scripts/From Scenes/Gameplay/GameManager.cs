@@ -87,14 +87,7 @@ public class GameManager : MonoBehaviour
         GetBirdSkins();
 
         coins = new GameObject[obstacles.Length];
-        //GetCoinRefs();
-
-        //SetCoinY();
-
-    }
-
-    // Start is called before the first frame update
-    
+    }    
 
     public void Start()
     {
@@ -113,14 +106,12 @@ public class GameManager : MonoBehaviour
         coinsInGame = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerAlive)
         {
             MoveTubes();
             CheckTubes();
-            //MoveCoins();
             CheckScore();
         }
         else
@@ -151,11 +142,6 @@ public class GameManager : MonoBehaviour
                     txtHighCoins.text = coinsInGame.ToString();
                     manager.SetMaxCoins(coinsInGame);
                 }
-
-//#if UNITY_ANDROID && !UNITY_EDITOR
-                
-                Logger.SaveCurrencyInFile(pointsTotal, coinsTotal, manager.GetMaxPoints().points, manager.GetMaxPoints().coins, manager.GetCosmeticList());
-//#endif
 
                 Manager.CheckPointAchievement(pointsInGame);
                 Manager.CheckAccumultarionAchievement(pointsTotal);
@@ -293,9 +279,6 @@ public class GameManager : MonoBehaviour
     public void EnterStore()
     {
         SendCurrency();
-#if UNITY_ANDROID && !UNITY_EDITOR
-            //Logger.SendFilePath();
-#endif
         Debug.Log("Yendo a la STORE, desde el GAMEPLAY");
         SceneManager.LoadScene("Store");
     }
@@ -303,9 +286,6 @@ public class GameManager : MonoBehaviour
     {
         manager.SetCoins(coinsTotal);
         manager.SetPoints(pointsTotal);
-#if UNITY_ANDROID && !UNITY_EDITOR
-            Logger.SendCurrency(pointsTotal, coinsTotal, "GAMEPLAY");
-#endif
 
         Debug.Log("Currency enviada al archivo en el celular.");
     }
@@ -335,57 +315,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    void GetCoinRefs()
-    {
-        List<Component> c = new List<Component>();
-        GameObject obs;
-        for (int i = 0; i < obstacles.Length; i++)
-        {
-            obs = obstacles[i];
-            obs.GetComponentsInChildren(c);
-            for (int j = 0; j < c.Count; j++)
-            {
-                if(c[j].CompareTag("coin"))
-                {
-                    coins[i] = c[j].gameObject;
-                }
-            }
-            c.Clear();
-        }
-    }
-    void SetCoinY()
-    {
-        for (int i = 0; i < coins.Length; i++)
-        {
-            coins[i].transform.position = obstacles[i].transform.position;
-        }
-    }
-    void MoveCoins()
-    {
-        Vector3 pos;
-        float parentPos;
-        for (int i = 0; i < coins.Length; i++)
-        {
-            pos = coins[i].transform.position;
-            parentPos = obstacles[i].transform.position.y;
-            if (pos.y > CoinVerticalMovement.maxY + parentPos)
-            {
-                pos = new Vector3(pos.x, pos.y - 1.0f * Time.deltaTime * 1.1f, pos.z);
-            }
-            if (pos.y < CoinVerticalMovement.minY + parentPos)
-            {
-                pos = new Vector3(pos.x, pos.y + 1.0f * Time.deltaTime * 1.2f, pos.z);
-            }
-        }
-    }
-    void CheckCoinAppearance(ref GameObject c)
-    {
-        c.SetActive(Random.Range(0, 1000) > 950);
-    }
-
-    public void ShowAchievements()
-    {
-        Auth.ShowAchievements();
-    }
-
 }

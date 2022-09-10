@@ -128,9 +128,9 @@ public class MenuManager : MonoBehaviour
             }
         }
     }
+
     public void ShowAchievements()
     {
-        Auth.ShowAchievements();
+        
     }
-
 }

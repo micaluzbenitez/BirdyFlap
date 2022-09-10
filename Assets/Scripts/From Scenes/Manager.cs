@@ -198,22 +198,18 @@ public class Manager : MonoBehaviour
         if (realizedPoints >= 20 && !achievementPoints20)
         {
             achievementPoints20 = true;
-            Auth.UnlockAchievement(GPGSIds.achievement_si);
         }
         if (realizedPoints >= 35 && !achievementPoints35)
         {
             achievementPoints35 = true;
-            Auth.UnlockAchievement(GPGSIds.achievement_eso_es);
         }
         if (realizedPoints >= 50 && !achievementPoints50)
         {
             achievementPoints50 = true;
-            Auth.UnlockAchievement(GPGSIds.achievement_vamos_tu_puedes);
         }
         if (realizedPoints >= 75 && !achievementPoints75)
         {
             achievementPoints75 = true;
-            Auth.UnlockAchievement(GPGSIds.achievement_lo_has_conseguido_75_puntos);
         }
     }
 
@@ -222,12 +218,10 @@ public class Manager : MonoBehaviour
         if (totalAccumulated >= 100 && !achievementAccumulate100)
         {
             achievementAccumulate100 = true;
-            Auth.UnlockAchievement(GPGSIds.achievement_acaparador);
         }
         if (totalAccumulated >= 500 && !achievementAccumulate500)
         {
             achievementAccumulate500 = true;
-            Auth.UnlockAchievement(GPGSIds.achievement_gran_acaparador);
         }
     }
 
