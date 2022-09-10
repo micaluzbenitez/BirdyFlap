@@ -2,25 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CurrencyType
-{
-    Points,
-    Coins
-}
-
-public struct Currency
-{
-    public int points;
-    public int coins;
-}
 
 public class Manager : MonoBehaviour
 {
     private static Manager instance = null;
-
-    private Currency currency;
-
-    private Currency maxCurrencyEarned;
+    private int points = 0;
+    private int maxPoints = 0;
 
     private static bool achievementPoints20 = false;
     private static bool achievementPoints35 = false;
@@ -30,59 +17,30 @@ public class Manager : MonoBehaviour
     private static bool achievementAccumulate100 = false;
     private static bool achievementAccumulate500 = false;
 
-
     void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-
-            currency.coins = 0;
-            currency.points = 0;
-            maxCurrencyEarned.coins = 0;
-            maxCurrencyEarned.points = 0;
-
-            DontDestroyOnLoad(gameObject);
-        }
+        points = 0;
+        maxPoints = 0;
     }
 
-    public static Manager GetInstance()
+    public int GetPoints()
     {
-        return instance;
+        return points;
     }
 
-    public Currency GetCurrency()
+    public int GetMaxPoints()
     {
-        return currency;
-    }
-
-    public Currency GetMaxPoints()
-    {
-        return maxCurrencyEarned;
+        return maxPoints;
     }
 
     public void SetMaxPoints(int points)
     {
-        maxCurrencyEarned.points = points;
-    }
-
-    public void SetMaxCoins(int coins)
-    {
-        maxCurrencyEarned.coins = coins;
+        maxPoints = points;
     }
 
     public void SetPoints(int points)
     {
-        currency.points = points;
-    }
-    
-    public void SetCoins(int coins)
-    {
-        currency.coins = coins;
+        this.points = points;
     }
 
     public static void CheckPointAchievement(int realizedPoints)
