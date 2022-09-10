@@ -84,8 +84,6 @@ public class GameManager : MonoBehaviour
         eyesSkin = eyes.GetComponent<SpriteRenderer>();
         Debug.Log(hatSkin);
 
-        GetBirdSkins();
-
         coins = new GameObject[obstacles.Length];
     }    
 
@@ -272,47 +270,6 @@ public class GameManager : MonoBehaviour
     }
     public void BackToMenu()
     {
-        SendCurrency();
-        Debug.Log("Volviendo al MENU. Desde el GAMEPLAY.");
         SceneManager.LoadScene("MainMenu");
-    }
-    public void EnterStore()
-    {
-        SendCurrency();
-        Debug.Log("Yendo a la STORE, desde el GAMEPLAY");
-        SceneManager.LoadScene("Store");
-    }
-    private void SendCurrency()
-    {
-        manager.SetCoins(coinsTotal);
-        manager.SetPoints(pointsTotal);
-
-        Debug.Log("Currency enviada al archivo en el celular.");
-    }
-    void GetBirdSkins()
-    {
-        for (int i = 0; i < manager.GetCosmeticList().Count; i++)
-        {
-            if (manager.GetCosmeticList()[i].IsEquipped())
-            {
-                switch (manager.GetCosmeticList()[i].cosmetic)
-                {
-                    case CosmeticType.Hat:
-                        hatSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
-                        Debug.Log(hatSkin);
-                        break;
-                    case CosmeticType.Beak:
-                        beakSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
-                        Debug.Log(beakSkin);
-                        break;
-                    case CosmeticType.Eyes:
-                        eyesSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
-                        Debug.Log(eyesSkin);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
     }
 }
