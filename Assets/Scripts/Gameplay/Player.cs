@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField] private float jumpForce;
     [SerializeField] private GameObject wing;
     [SerializeField] private float wingSpeed;
@@ -21,11 +20,12 @@ public class Player : MonoBehaviour
     public static Action onPlayerCollision;
     public static Action onGrabCoin;
 
-    void Awake()
+    private void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         pos = gameObject.transform.position;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)
@@ -33,17 +33,10 @@ public class Player : MonoBehaviour
             alive = false;
             onPlayerCollision?.Invoke();
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
-
-            Debug.Log("Colision con un obstaculo.");
-        }
-        if(collision.gameObject.layer == 9)
-        {
-            onGrabCoin?.Invoke();
-            Debug.Log("Colision con una moneda");
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (!alive) return;
         
@@ -51,20 +44,20 @@ public class Player : MonoBehaviour
         MoveWing();
     }
 
-    void Jump()
+    private void Jump()
     {
         Vector2 force = new Vector2(0, jumpForce);
         rb.velocity = Vector2.zero;
         rb.AddForce(force, ForceMode2D.Impulse);
     }
 
-    void CheckInputs()
+    private void CheckInputs()
     {
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
         if (Input.GetKeyDown(KeyCode.Mouse0)) Jump();
     }
 
-    void MoveWing()
+    private void MoveWing()
     {
         if (direction)
         {
@@ -85,6 +78,7 @@ public class Player : MonoBehaviour
 
         wing.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
+
     public void ResetPlayer()
     {
         rb.velocity = Vector3.zero;
@@ -93,7 +87,5 @@ public class Player : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         alive = true;
         transform.position = pos;
-
-        Debug.Log("Reseteo de personaje.");
     }
 }

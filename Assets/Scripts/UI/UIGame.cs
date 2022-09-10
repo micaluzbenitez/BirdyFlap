@@ -9,7 +9,6 @@ public class UIGame : MonoBehaviour
     [Header("Points UI")]
     [SerializeField] private TMP_Text txtPointsOnGame = null;
     [SerializeField] private TMP_Text txtPointsOnUI = null;
-    [SerializeField] private TMP_Text txtHighPoints = null;
 
     [Header("End panel")]
     [SerializeField] private CanvasGroup endScreen = null;
@@ -18,12 +17,7 @@ public class UIGame : MonoBehaviour
     private bool showEndScreen = false;
     private int pointsInGame = 0;
 
-    [SerializeField] private Manager manager;
-
-    private void Awake()
-    {
-        txtHighPoints.text = manager.GetMaxPoints().ToString();
-    }
+    [SerializeField] private Stats stats;
 
     private void Start()
     {
@@ -38,14 +32,6 @@ public class UIGame : MonoBehaviour
         {
             txtPointsOnGame.text = "";
             txtPointsOnUI.text = pointsInGame.ToString();
-
-            if (HigherThanPrev(pointsInGame, manager.GetMaxPoints()))
-            {
-                txtHighPoints.text = pointsInGame.ToString();
-                manager.SetMaxPoints(pointsInGame);
-            }
-
-            Manager.CheckPointAchievement(pointsInGame);
 
             StartCoroutine(LoadPanelCoroutine(endScreen));
             showEndScreen = true;

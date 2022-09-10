@@ -35,9 +35,9 @@ public class GameManager : MonoBehaviour
     {
         playerAlive = player.GetComponent<Player>().alive;
         Player.onPlayerCollision += StopMovement;
-    }    
+    }
 
-    public void Start()
+    private void Start()
     {
         justPassed = new bool[obstacles.Length];
         justChecked = new bool[obstacles.Length];
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void Update()
+    private void Update()
     {
         if (playerAlive)
         {
@@ -60,10 +60,11 @@ public class GameManager : MonoBehaviour
         {
             uiGame.ShowEndScreen();
         }
-
     }
-    void StopMovement() => playerAlive = false;
-    void SetTubesPosition()
+
+    private void StopMovement() => playerAlive = false;
+
+    private void SetTubesPosition()
     {
         for (int i = 0; i < obstacles.Length; i++)
         {
@@ -73,7 +74,8 @@ public class GameManager : MonoBehaviour
         }
         distanceToReset = obstacles[obstacles.Length - 1].transform.position.x + distanceBetweenObstacles;
     }
-    void SetNewObstaclePos(ref GameObject obstacle, int actualPos)
+
+    private void SetNewObstaclePos(ref GameObject obstacle, int actualPos)
     {
         int lastObstacle = 0;
         switch (actualPos)
@@ -96,7 +98,8 @@ public class GameManager : MonoBehaviour
         justPassed[actualPos] = false;
         justChecked[actualPos] = false;
     }
-    void CheckTubes()//Se fija cual ha llegado al final y lo resetea a una Y distinta
+
+    private void CheckTubes() //Se fija cual ha llegado al final y lo resetea a una Y distinta
     {
         for (int i = 0; i < obstacles.Length; i++)
         {
@@ -110,7 +113,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    void CheckScore()
+    private void CheckScore()
     {
         for (int i = 0; i < justPassed.Length; i++)
         {
@@ -125,7 +128,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void MoveTubes()
+    private void MoveTubes()
     {
         for (int i = 0; i < obstacles.Length; i++)
         {
