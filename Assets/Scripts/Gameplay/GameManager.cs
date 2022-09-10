@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject[] obstacles;
+    [SerializeField] private GameObject[] obstaclesPrefabs;
     [SerializeField] private float distanceBetweenObstacles = 1;
     [SerializeField] private float initialPosX = 3.5f;
     
@@ -71,12 +72,16 @@ public class GameManager : MonoBehaviour
             obstacles[i].transform.position = new Vector3(initialPosX + distanceBetweenObstacles * i, Random.Range(minHeight, maxHeight));
             justPassed[i] = false;
             justChecked[i] = false;
+            CreateRandomObstacle(obstacles[i]);
         }
+
         distanceToReset = obstacles[obstacles.Length - 1].transform.position.x + distanceBetweenObstacles;
     }
 
     private void SetNewObstaclePos(ref GameObject obstacle, int actualPos)
     {
+        Destroy(obstacle.transform.GetChild(0).gameObject);
+
         int lastObstacle = 0;
         switch (actualPos)
         {
@@ -94,9 +99,10 @@ public class GameManager : MonoBehaviour
         }
         obstacle.transform.position = new Vector3(obstacles[lastObstacle].transform.position.x + distanceBetweenObstacles, Random.Range(minHeight, maxHeight));
 
-        Debug.Log("Obstaculo setteado en la altura " + obstacle.transform.position);
         justPassed[actualPos] = false;
         justChecked[actualPos] = false;
+
+        CreateRandomObstacle(obstacle);
     }
 
     private void CheckTubes() //Se fija cual ha llegado al final y lo resetea a una Y distinta
@@ -112,6 +118,13 @@ public class GameManager : MonoBehaviour
                 SetNewObstaclePos(ref obstacles[i], i);
             }
         }
+    }
+
+    private void CreateRandomObstacle(GameObject obstacle)
+    {
+        int index = Random.Range(0, obstaclesPrefabs.Length);
+        GameObject go = Instantiate(obstaclesPrefabs[index], obstacle.transform.position, obstaclesPrefabs[index].transform.rotation);
+        go.transform.SetParent(obstacle.transform);
     }
 
     private void CheckScore()
