@@ -29,9 +29,9 @@ public class UIMainMenu : MonoBehaviour
         StartCoroutine(LoadPanelCoroutine(creditPanel));
     }
 
-    public void LoadGame(string scene)
+    public void LoadGame()
     {
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene("Gameplay");
     }
 
     public void LoadStore()
