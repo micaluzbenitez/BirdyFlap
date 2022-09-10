@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
     private void CheckScore()
     {
         for (int i = 0; i < justPassed.Length; i++)

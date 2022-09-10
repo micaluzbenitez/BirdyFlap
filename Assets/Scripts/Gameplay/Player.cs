@@ -5,8 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float jumpForce;
-    [SerializeField] private GameObject wing;
-    [SerializeField] private float wingSpeed;
 
     public bool alive = true;
 
@@ -41,7 +39,6 @@ public class Player : MonoBehaviour
         if (!alive) return;
         
         CheckInputs();
-        MoveWing();
     }
 
     private void Jump()
@@ -55,28 +52,6 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
         if (Input.GetKeyDown(KeyCode.Mouse0)) Jump();
-    }
-
-    private void MoveWing()
-    {
-        if (direction)
-        {
-            angle += wingSpeed * Time.deltaTime;
-            if (angle > maxAngle)
-            {
-                direction = !direction;
-            }
-        }
-        else
-        {
-            angle -= wingSpeed * Time.deltaTime;
-            if (angle < minAngle)
-            {
-                direction = !direction;
-            }
-        }
-
-        wing.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     public void ResetPlayer()
