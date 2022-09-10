@@ -301,6 +301,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1625480532252860451, guid: 6dba761ac9f083544a386f501629ae96,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1625480532501586387, guid: 6dba761ac9f083544a386f501629ae96,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -445,6 +450,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UIMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625480533340716880, guid: 6dba761ac9f083544a386f501629ae96,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1625480533440671449, guid: 6dba761ac9f083544a386f501629ae96,
         type: 3}

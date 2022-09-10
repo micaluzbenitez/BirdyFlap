@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] obstaclesPrefabs;
     [SerializeField] private float distanceBetweenObstacles = 1;
     [SerializeField] private float initialPosX = 3.5f;
-    
+
     [SerializeField] private float maxHeight = 3.7f;
     [SerializeField] private float minHeight = -2.6f;
     [SerializeField] private float limitLeft = -3.5f;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     private float distanceToReset = 0;
     private bool[] justPassed = null;
-    private bool[] justChecked = null;    
+    private bool[] justChecked = null;
 
     private bool playerAlive = false;
 
@@ -125,6 +125,9 @@ public class GameManager : MonoBehaviour
         int index = Random.Range(0, obstaclesPrefabs.Length);
         GameObject go = Instantiate(obstaclesPrefabs[index], obstacle.transform.position, obstaclesPrefabs[index].transform.rotation);
         go.transform.SetParent(obstacle.transform);
+
+        if (index == 3 || index == 4)
+            obstacle.transform.position = new Vector3(obstacle.transform.position.x, maxHeight, obstacle.transform.position.z);
     }
 
     private void CheckScore()
