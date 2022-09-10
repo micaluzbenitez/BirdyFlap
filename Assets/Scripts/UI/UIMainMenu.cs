@@ -11,19 +11,6 @@ public class UIMainMenu : MonoBehaviour
 
     [SerializeField] private float showSpeed = 1;
 
-    //[SerializeField] private Image hatSkin = null;
-    //[SerializeField] private Image beakSkin= null;
-    //[SerializeField] private Image eyesSkin = null;
-    //[SerializeField] private Image eyesSkin = null;
-
-    //private Manager manager = null;
-
-    private void Awake()
-    {
-        //manager = Manager.GetInstance();
-        //GetBirdSkins();
-    }
-
     public void Start()
     {
         LoadMainMenuPanel();
@@ -62,11 +49,11 @@ public class UIMainMenu : MonoBehaviour
     {
         if (panel.alpha > 0)
         {
-            float t = 1;
-            while (t > 0)
+            float timer = 1;
+            while (timer > 0)
             {
-                panel.alpha = Mathf.Lerp(0, 1, t);
-                t -= Time.deltaTime * showSpeed;
+                panel.alpha = Mathf.Lerp(0, 1, timer);
+                timer -= Time.deltaTime * showSpeed;
                 yield return null;
             }
             panel.alpha = 0;
@@ -77,42 +64,15 @@ public class UIMainMenu : MonoBehaviour
 
     private IEnumerator LoadPanelCoroutine(CanvasGroup panel)
     {
-        float t = 0;
-        while (t < 1)
+        float timer = 0;
+        while (timer < 1)
         {
-            panel.alpha = Mathf.Lerp(0, 1, t);
-            t += Time.deltaTime * showSpeed;
+            panel.alpha = Mathf.Lerp(0, 1, timer);
+            timer += Time.deltaTime * showSpeed;
             yield return null;
         }
         panel.alpha = 1;
         panel.interactable = true;
         panel.blocksRaycasts = true;
     }
-
-    //private void GetBirdSkins()
-    //{
-    //    for (int i = 0; i < manager.GetCosmeticList().Count; i++)
-    //    {
-    //        if(manager.GetCosmeticList()[i].IsEquipped())
-    //        {
-    //            switch (manager.GetCosmeticList()[i].cosmetic)
-    //            {
-    //                case CosmeticType.Hat:
-    //                    //Debug.Log("Skin equipado de sombrero: " + i);
-    //                    hatSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
-    //                    break;
-    //                case CosmeticType.Beak:
-    //                    //Debug.Log("Skin equipado de pico: " + i);
-    //                    beakSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
-    //                    break;
-    //                case CosmeticType.Eyes:
-    //                    //Debug.Log("Skin equipado de ojos: " + i);
-    //                    eyesSkin.sprite = manager.GetCosmeticList()[i].GetSprite();
-    //                    break;
-    //                default:
-    //                    break;
-    //            }
-    //        }
-    //    }
-    //}
 }

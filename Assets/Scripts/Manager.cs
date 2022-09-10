@@ -92,14 +92,10 @@ public class Manager : MonoBehaviour
         {
             instance = this;
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-            GetFileParameters();          
-#else
             currency.coins = 0;
             currency.points = 0;
             maxCurrencyEarned.coins = 0;
             maxCurrencyEarned.points = 0;
-#endif
 
             skin.bird.eyes = 7;
             skin.bird.hat_color = 0;

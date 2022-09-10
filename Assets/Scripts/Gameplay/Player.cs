@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
             Debug.Log("Colision con una moneda");
         }
     }
+
     void Update()
     {
         if (!alive) return;
@@ -55,21 +56,14 @@ public class Player : MonoBehaviour
         Vector2 force = new Vector2(0, jumpForce);
         rb.velocity = Vector2.zero;
         rb.AddForce(force, ForceMode2D.Impulse);
-        //Debug.Log("El personaje salta");
     }
+
     void CheckInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //Debug.Log("Salto con espacio");
-            Jump();
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            //Debug.Log("Salto con clic izquierdo");
-            Jump();
-        }
+        if (Input.GetKeyDown(KeyCode.Space)) Jump();
+        if (Input.GetKeyDown(KeyCode.Mouse0)) Jump();
     }
+
     void MoveWing()
     {
         if (direction)
